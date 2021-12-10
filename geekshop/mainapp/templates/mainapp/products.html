@@ -20,24 +20,16 @@
 			<div class="details-products">
 				<div class="details-slider">
 					<div class="slider-product">
-						<img src="{% static 'img/slider1.jpg' %}">
+						<img src="{% static 'img/slider1.jpg' %}" alt="img">
 					</div>
 					<div class="slider-control">
+                    {% for slider_prod in slider_prods %}
 						<div class="block">
-							<a href="#"><img src="{% static 'img/controll.jpg' %}" alt="">
+							<a href="{{ slider_prod.pk }}"><img src="/media/{{ slider_prod.image }}" alt="{{ slider_prod.short_desc }}">
 								<div class="text"></div>
 							</a>
 						</div>
-						<div class="block">
-							<a href="#"><img src="{% static 'img/controll1.jpg' %}" alt="">
-								<div class="text"></div>
-							</a>
-						</div>
-						<div class="block">
-							<a href="#"><img src="{% static 'img/controll2.jpg' %}" alt="">
-								<div class="text"></div>
-							</a>
-						</div>
+                    {% endfor %}
 					</div>
 				</div>
 
@@ -65,34 +57,17 @@
 					<a class="explore" href="#">показать все <img src="{% static 'img/arrow.png' %}" alt=""></a>
 				</div>
 				<div class="related-products clearfix">
+                {% for product in products %}
 					<div class="block">
-						<a href="#"><img src="{% static 'img/product-11.jpg' %}" alt="">
+						<a href="{{ product.pk }}"><img src="/media/{{ product.image }}" alt="{{ product.short_desc }}">
 							<div class="text">
 								<img src="{% static 'img/icon-hover.png' %}" alt="img">
-								<h4>Стул повышенного качества</h4>
-								<p>Не оторваться. </p>
+								<h4>{{ product.name}}</h4>
+								<p>{{ product.description}}</p>
 							</div>
 						</a>
 					</div>
-					<div class="block">
-						<a href="#"><img src="{% static 'img/product-21.jpg' %}" alt="">
-							<div class="text">
-								<img src="{% static 'img/icon-hover.png' %}" alt="img">
-								<h4>Стул повышенного качества</h4>
-								<p>Не оторваться. </p>
-							</div>
-						</a>
-					</div>
-					<div class="block">
-						<a href="#"><img src="{% static 'img/product-31.jpg' %}" alt="">
-							<div class="text">
-								<img src="{% static 'img/icon-hover.png' %}" alt="img">
-								<h4>Стул повышенного качества</h4>
-								<p>Не оторваться. </p>
-							</div>
-						</a>
-					</div>
-
+                {% endfor %}
 				</div>
 			</div>
 		</div>

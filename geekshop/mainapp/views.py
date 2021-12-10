@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import ProductCategory, Product, ContactCategory, Contact
 import pathlib
 import json
 
@@ -12,16 +13,29 @@ with open(f'{pathlib.Path().absolute()}/mainapp/templates/mainapp/json/categorie
 
 
 def main(request):
+    title = 'Домой'
+
+    products = Product.objects.all()[:2]
+
     content = {
-        'title': 'Домой',
+        'title': title,
+        'products': products,
         'links_menu': links_menu
     }
     return render(request, 'mainapp/index.html', content)
 
 
-def products(request):
+def products(request, pk=None):
+    print(pk)
+    title = 'Продукты'
+
+    products = Product.objects.all()[2:5]
+    slider_prods = Product.objects.all()[5:8]
+
     content = {
-        'title': 'Продукты',
+        'title': title,
+        'products': products,
+        'slider_prods': slider_prods,
         'links_categories_menu': links_categories_menu,
         'links_menu': links_menu
     }
@@ -29,8 +43,13 @@ def products(request):
 
 
 def contact(request):
+    title = 'Продукты'
+
+    contacts = Contact.objects.all()[:3]
+
     content = {
-        'title': 'Контакты',
+        'title': title,
+        'contacts': contacts,
         'links_menu': links_menu
     }
     return render(request, 'mainapp/contact.html', content)
