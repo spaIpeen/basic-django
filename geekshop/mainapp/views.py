@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from .models import ProductCategory, Product, ContactCategory, Contact
+from .models import ProductCategory, Product, Contact
+from django.shortcuts import get_object_or_404
+from basketapp.models import Basket
 import pathlib
 import json
 
@@ -8,15 +10,13 @@ import json
 with open(f'{pathlib.Path().absolute()}/mainapp/json/main_menu.json', 'r') as read_file:
     links_menu = json.load(read_file)
 
-with open(f'{pathlib.Path().absolute()}/mainapp/json/menu_categories.json', 'r') as read_file:
-    links_categories_menu = json.load(read_file)
+with open(f'{pathlib.Path().absolute()}/mainapp/json/categories.json', 'r') as read_file:
+    qwe = json.load(read_file)
 
 
 def main(request):
     title = 'Домой'
-
     products = Product.objects.all()[:2]
-
     content = {
         'title': title,
         'products': products,
@@ -27,15 +27,34 @@ def main(request):
 
 def products(request, pk=None):
     print(pk)
-    title = 'Продукты'
+    title = 'продукты'
+    links_categories_menu = ProductCategory.objects.all()
+    basket = []
+    if request.user.is_authenticated:
+        basket = Basket.objects.filter(user=request.user)
 
-    products = Product.objects.all()[5:8]
-    slider_prods = Product.objects.all()[2:5]
+    if pk is not None:
+        if pk == 0:
+            products = Product.objects.all().order_by('price')
+            category = {'name': 'все'}
+        else:
+            category = get_object_or_404(ProductCategory, pk=pk)
+            products = Product.objects.filter(category__pk=pk).order_by('price')
 
+        content = {
+            'title': title,
+            'products': products,
+            'category': category,
+            'basket': basket,
+            'links_categories_menu': links_categories_menu,
+            'links_menu': links_menu
+        }
+        return render(request, 'mainapp/products_list.html', content)
+
+    same_products = Product.objects.all()[3:5]
     content = {
         'title': title,
-        'products': products,
-        'slider_prods': slider_prods,
+        'same_products': same_products,
         'links_categories_menu': links_categories_menu,
         'links_menu': links_menu
     }
@@ -44,9 +63,7 @@ def products(request, pk=None):
 
 def contact(request):
     title = 'Продукты'
-
     contacts = Contact.objects.all()[:3]
-
     content = {
         'title': title,
         'contacts': contacts,
