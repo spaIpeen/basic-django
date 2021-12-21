@@ -1,0 +1,74 @@
+[
+  {
+    "category": "Стулья",
+    "name": "Отличный стул",
+    "image": "product-1.jpg",
+    "short_desc": "",
+    "description": "Расположитесь комфортно.",
+    "price": 0,
+    "quantity": 0
+  },
+  {
+    "category": "Стулья",
+    "name": "Стул повышенного качества",
+    "image": "product-2.jpg",
+    "short_desc": "",
+    "description": "Не оторваться.",
+    "price": 0,
+    "quantity": 0
+  },
+  {
+    "category": "Стулья",
+    "name": "Синий стул",
+    "image": "controll.jpg",
+    "short_desc": "",
+    "description": "",
+    "price": 0,
+    "quantity": 0
+  },
+  {
+    "category": "Стулья",
+    "name": "Фиолетовый стул",
+    "image": "controll1.jpg",
+    "short_desc": "",
+    "description": "",
+    "price": 0,
+    "quantity": 0
+  },
+  {
+    "category": "Стулья",
+    "name": "Красный стул",
+    "image": "controll2.jpg",
+    "short_desc": "",
+    "description": "",
+    "price": 0,
+    "quantity": 0
+  },
+  {
+    "category": "Стулья",
+    "name": "Стул повышенного качества",
+    "image": "product-11.jpg",
+    "short_desc": "",
+    "description": "Не оторваться. ",
+    "price": 0,
+    "quantity": 0
+  },
+  {
+    "category": "Стулья",
+    "name": "Стул повышенного качества",
+    "image": "product-21.jpg",
+    "short_desc": "",
+    "description": "Не оторваться. ",
+    "price": 0,
+    "quantity": 0
+  },
+  {
+    "category": "Стулья",
+    "name": "Стул повышенного качества",
+    "image": "product-31.jpg",
+    "short_desc": "",
+    "description": "Не оторваться. ",
+    "price": 0,
+    "quantity": 0
+  }
+]

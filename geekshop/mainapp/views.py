@@ -5,10 +5,10 @@ import json
 
 # Create your views here.
 
-with open(f'{pathlib.Path().absolute()}/mainapp/templates/mainapp/json/menu.json', 'r') as read_file:
+with open(f'{pathlib.Path().absolute()}/mainapp/json/main_menu.json', 'r') as read_file:
     links_menu = json.load(read_file)
 
-with open(f'{pathlib.Path().absolute()}/mainapp/templates/mainapp/json/categories.json', 'r') as read_file:
+with open(f'{pathlib.Path().absolute()}/mainapp/json/menu_categories.json', 'r') as read_file:
     links_categories_menu = json.load(read_file)
 
 
@@ -29,8 +29,8 @@ def products(request, pk=None):
     print(pk)
     title = 'Продукты'
 
-    products = Product.objects.all()[2:5]
-    slider_prods = Product.objects.all()[5:8]
+    products = Product.objects.all()[5:8]
+    slider_prods = Product.objects.all()[2:5]
 
     content = {
         'title': title,

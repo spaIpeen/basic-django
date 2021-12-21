@@ -25,7 +25,7 @@
 					<div class="slider-control">
                     {% for slider_prod in slider_prods %}
 						<div class="block">
-							<a href="{{ slider_prod.pk }}"><img src="/media/{{ slider_prod.image }}" alt="{{ slider_prod.short_desc }}">
+							<a href="{{ slider_prod.pk }}"><img src="/media/product_images/{{ slider_prod.image }}" alt="{{ slider_prod.short_desc }}">
 								<div class="text"></div>
 							</a>
 						</div>
@@ -59,7 +59,7 @@
 				<div class="related-products clearfix">
                 {% for product in products %}
 					<div class="block">
-						<a href="{{ product.pk }}"><img src="/media/{{ product.image }}" alt="{{ product.short_desc }}">
+						<a href="{{ product.pk }}"><img src="/media/product_images/{{ product.image }}" alt="{{ product.short_desc }}">
 							<div class="text">
 								<img src="{% static 'img/icon-hover.png' %}" alt="img">
 								<h4>{{ product.name}}</h4>

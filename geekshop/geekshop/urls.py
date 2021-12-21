@@ -25,11 +25,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('products/', include('mainapp.urls', namespace='products')),
     path('contact/', views.contact, name='contact'),
+    path('auth/', include('authapp.urls', namespace='auth')),
     path('products_all', views.products, name='products_all'),
     path('products_home', views.products, name='products_home'),
     path('products_office', views.products, name='products_office'),
     path('products_modern', views.products, name='products_modern'),
-    path('products_classic', views.products, name='products_classic')
+    path('products_classic', views.products, name='products_classic'),
 ]
 
 if settings.DEBUG:
