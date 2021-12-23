@@ -1,13 +1,17 @@
 "use strict";
 
 window.onload = function () {
-    console.log('DOM ready');
-    $('.basket_record').on('change', "input[type='number']", function (event) {
-        let qty = event.target.value;
-        let productPk = event.target.name;
-        console.log(productPk, qty);
-        // send to backend
-        // get from backend
-        // do smth in DOM
+    $('.basket_list').on('click', 'input[type="number"]', function () {
+        let t_href = event.target;
+
+        $.ajax({
+            url: '/basket/edit/' + t_href.name + '/' + t_href.value + '/',
+
+            success: function (data) {
+                $('.basket_list').html(data.result);
+            },
+        });
+
+        event.preventDefault();
     });
 }

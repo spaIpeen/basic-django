@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from basketapp.models import Basket
 import pathlib
 import json
+import random
 
 # Create your views here.
 
@@ -26,10 +27,9 @@ def main(request):
 
 
 def products(request, pk=None):
-    print(pk)
     title = 'продукты'
     links_categories_menu = ProductCategory.objects.all()
-    basket = []
+    basket = get_basket(request.user)
     if request.user.is_authenticated:
         basket = Basket.objects.filter(user=request.user)
 
@@ -51,12 +51,15 @@ def products(request, pk=None):
         }
         return render(request, 'mainapp/products_list.html', content)
 
-    same_products = Product.objects.all()[3:5]
+    hot_product = get_hot_product()
+    same_products = get_same_products(hot_product)
     content = {
         'title': title,
+        'hot_product': hot_product,
         'same_products': same_products,
         'links_categories_menu': links_categories_menu,
-        'links_menu': links_menu
+        'links_menu': links_menu,
+        'basket': basket,
     }
     return render(request, 'mainapp/products.html', content)
 
@@ -70,3 +73,35 @@ def contact(request):
         'links_menu': links_menu
     }
     return render(request, 'mainapp/contact.html', content)
+
+
+def get_basket(user):
+    if user.is_authenticated:
+        return Basket.objects.filter(user=user)
+    else:
+        return []
+
+
+def get_hot_product():
+    products = Product.objects.all()
+
+    return random.sample(list(products), 1)[0]
+
+
+def get_same_products(hot_product):
+    same_products = Product.objects.filter(category=hot_product.category).exclude(pk=hot_product.pk)[:3]
+
+    return same_products
+
+
+def product(request, pk):
+    title = 'продукты'
+
+    content = {
+        'title': title,
+        'links_menu': ProductCategory.objects.all(),
+        'product': get_object_or_404(Product, pk=pk),
+        'basket': get_basket(request.user),
+    }
+
+    return render(request, 'mainapp/product.html', content)
