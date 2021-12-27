@@ -17,17 +17,17 @@
             <div class="details-products">
                 <div class="details-slider">
                     <div class="slider-product">
-                      <img src="/media/product_images/{{ hot_product.image }}">
+                      <img src="/media/{{ hot_product.image }}">
                     </div>
                     <div class="slider-control">
                       <div class="block">
-                        <a href="#"><img src="/media/product_images/{{ hot_product.image }}" alt=""></a>
+                        <a href="#"><img src="/media/{{ hot_product.image }}" alt=""></a>
                       </div>
                       <div class="block">
-                        <a href="#"><img src="/media/product_images/{{ hot_product.image }}" alt=""></a>
+                        <a href="#"><img src="/media/{{ hot_product.image }}" alt=""></a>
                       </div>
                       <div class="block">
-                        <a href="#"><img src="/media/product_images/{{ hot_product.image }}" alt=""></a>
+                        <a href="#"><img src="/media/{{ hot_product.image }}" alt=""></a>
                       </div>
                     </div>
                   </div>
@@ -53,7 +53,7 @@
 				<div class="related-products clearfix">
                 {% for product in same_products %}
 					<div class="block">
-						<a href="{% url 'products:product' product.pk %}"><img src="/media/product_images/{{ product.image }}" alt="{{ product.short_desc }}">
+						<a href="{% url 'products:product' product.pk %}"><img src="/media/{{ product.image }}" alt="{{ product.short_desc }}">
 							<div class="text">
 								<img src="{% static 'img/icon-hover.png' %}" alt="img">
 								<h4>{{ product.name}}</h4>
