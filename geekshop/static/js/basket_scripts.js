@@ -1,17 +1,25 @@
 "use strict";
 
 window.onload = function () {
-    $('.basket_list').on('click', 'input[type="number"]', function () {
-        let t_href = event.target;
-
+    console.log('DOM ready');
+    $('.basket_record').on('change', "input[type='number']", function (event) {
+        let qty = event.target.value;
+        let basketItemPk = event.target.name;
+        console.log(basketItemPk, qty);
         $.ajax({
-            url: '/basket/edit/' + t_href.name + '/' + t_href.value + '/',
-
+            url: "/basket/update/" + basketItemPk + "/" + qty + "/",
+            // data: {qty: qty, basketItemPk: basketItemPk},
+            // method: post,
             success: function (data) {
-                $('.basket_list').html(data.result);
+                // console.log(data);
+                if (data.status) {
+                    $('.basket_summary').html(data.basket_summary);
+                    // $('.basket_summary').html(data.basket_summary);
+                }
             },
         });
-
-        event.preventDefault();
+        // send to backend
+        // get from backend
+        // do smth in DOM
     });
 }
