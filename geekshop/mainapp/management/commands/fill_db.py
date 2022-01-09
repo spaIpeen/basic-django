@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from mainapp.models import ProductCategory, Product, ContactCategory, Contact
+from mainapp.models import ProductCategory, Product
 from django.contrib.auth.models import User
 from authapp.models import ShopUser
 import os
@@ -21,12 +21,6 @@ class Command(BaseCommand):
             new_category = ProductCategory(**category)
             new_category.save()
 
-        contacts_category = load_from_json('contacts_category')
-        ContactCategory.objects.all().delete()
-        for contact in contacts_category:
-            new_category_contact = ContactCategory(**contact)
-            new_category_contact.save()
-
         products = load_from_json('products')
         Product.objects.all().delete()
         for product in products:
@@ -35,14 +29,5 @@ class Command(BaseCommand):
             product['category'] = _category
             new_product = Product(**product)
             new_product.save()
-
-        contacts = load_from_json('contacts')
-        Contact.objects.all().delete()
-        for contact in contacts:
-            category_alias = contact['category']
-            _contact = ContactCategory.objects.get(name=category_alias)
-            contact['category'] = _contact
-            new_contact = Contact(**contact)
-            new_contact.save()
 
         super_user = ShopUser.objects.create_superuser('django', 'django@geekshop.local', 'geekbrains', age=33)
