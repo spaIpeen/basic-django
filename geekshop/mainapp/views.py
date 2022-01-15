@@ -30,12 +30,9 @@ def main(request):
 def products(request, pk=None, page=1):
     title = 'продукты'
     links_categories_menu = ProductCategory.objects.filter(is_active=True)
-    basket = get_basket(request.user)
-    if request.user.is_authenticated:
-        basket = Basket.objects.filter(user=request.user)
 
     if pk is not None:
-        if pk == 0:
+        if pk == '0':
             products = Product.objects.filter(is_active=True, category__is_active=True).order_by('price')
             category = {
                 'pk': 0,
@@ -43,7 +40,8 @@ def products(request, pk=None, page=1):
             }
         else:
             category = get_object_or_404(ProductCategory, pk=pk)
-            products = Product.objects.filter(category__pk=pk, is_active=True, category__is_active=True).order_by('price')
+            products = Product.objects.filter(category__pk=pk, is_active=True,
+                                              category__is_active=True).order_by('price')
 
         paginator = Paginator(products, 2)
         try:
@@ -57,7 +55,6 @@ def products(request, pk=None, page=1):
             'title': title,
             'products': products_paginator,
             'category': category,
-            'basket': basket,
             'links_categories_menu': links_categories_menu,
             'links_menu': links_menu
         }
@@ -71,7 +68,6 @@ def products(request, pk=None, page=1):
         'same_products': same_products,
         'links_categories_menu': links_categories_menu,
         'links_menu': links_menu,
-        'basket': basket,
     }
     return render(request, 'mainapp/products.html', content)
 
