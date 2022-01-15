@@ -1,6 +1,9 @@
 {% extends 'authapp/base.html' %}
 {% load static %}
 
+{% block menu %}
+{% endblock %}
+
 {% block content %}
   <form class="form-horizontal" method="post" enctype="multipart/form-data">
     {% csrf_token %}
@@ -8,8 +11,8 @@
     <input class="form-control" type="submit" value="сохранить">
   </form>
   <button class="btn btn-round form-control last">
-    <a href="{% url 'admin:users' %}">
-      к списку пользователей
+    <a href="{% url 'admin:categories' %}">
+      к списку категорий
     </a>
   </button>
 {% endblock %}
