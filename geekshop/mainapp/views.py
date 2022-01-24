@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from .models import ProductCategory, Product, Contact
+from .models import ProductCategory, Product
 from django.shortcuts import get_object_or_404
 from basketapp.models import Basket
 import pathlib
 import json
 import random
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 
@@ -26,26 +27,34 @@ def main(request):
     return render(request, 'mainapp/index.html', content)
 
 
-def products(request, pk=None):
+def products(request, pk=None, page=1):
     title = 'продукты'
-    links_categories_menu = ProductCategory.objects.all()
-    basket = get_basket(request.user)
-    if request.user.is_authenticated:
-        basket = Basket.objects.filter(user=request.user)
+    links_categories_menu = ProductCategory.objects.filter(is_active=True)
 
     if pk is not None:
-        if pk == 0:
-            products = Product.objects.all().order_by('price')
-            category = {'name': 'все'}
+        if pk == '0':
+            products = Product.objects.filter(is_active=True, category__is_active=True).order_by('price')
+            category = {
+                'pk': 0,
+                'name': 'все'
+            }
         else:
             category = get_object_or_404(ProductCategory, pk=pk)
-            products = Product.objects.filter(category__pk=pk).order_by('price')
+            products = Product.objects.filter(category__pk=pk, is_active=True,
+                                              category__is_active=True).order_by('price')
+
+        paginator = Paginator(products, 2)
+        try:
+            products_paginator = paginator.page(page)
+        except PageNotAnInteger:
+            products_paginator = paginator.page(1)
+        except EmptyPage:
+            products_paginator = paginator.page(paginator.num_pages)
 
         content = {
             'title': title,
-            'products': products,
+            'products': products_paginator,
             'category': category,
-            'basket': basket,
             'links_categories_menu': links_categories_menu,
             'links_menu': links_menu
         }
@@ -59,18 +68,30 @@ def products(request, pk=None):
         'same_products': same_products,
         'links_categories_menu': links_categories_menu,
         'links_menu': links_menu,
-        'basket': basket,
     }
     return render(request, 'mainapp/products.html', content)
 
 
 def contact(request):
     title = 'Продукты'
-    contacts = Contact.objects.all()[:3]
+    contacts = [
+        {'city': 'Москва',
+         'phone': '+7-888-444-7777',
+         'email': 'info@geekshop.ru',
+         'address': 'В пределах МКАД'},
+        {'city': 'Санкт-Петербург',
+         'phone': '+7-888-333-9999',
+         'email': 'info.spb@geekshop.ru',
+         'address': 'В пределах КАД'},
+        {'city': 'Хабаровск',
+         'phone': '+7-888-222-3333',
+         'email': 'info.east@geekshop.ru',
+         'address': 'В пределах центра'},
+    ]
     content = {
         'title': title,
         'contacts': contacts,
-        'links_menu': links_menu
+        'links_menu': links_menu,
     }
     return render(request, 'mainapp/contact.html', content)
 
