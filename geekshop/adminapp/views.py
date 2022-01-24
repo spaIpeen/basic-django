@@ -10,6 +10,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
+from ordersapp.models import Order
 
 # Create your views here.
 
@@ -190,6 +191,23 @@ class ProductDeleteView(UsersDeleteView):
     model = Product
     template_name = 'adminapp/product_delete.html'
     success_url = reverse_lazy('admin:categories')
+
+
+class OrdersReadView(ListView):
+    model = Order
+    page_name = 'заказы'
+    template_name = 'adminapp/order_read.html'
+
+    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = self.page_name
+
+        return context
+
 #
 #
 # @user_passes_test(lambda u: u.is_superuser)
