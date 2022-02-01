@@ -11,21 +11,35 @@ class Basket(models.Model):
     quantity = models.PositiveIntegerField(verbose_name='количество', default=0)
     add_datetime = models.DateTimeField(verbose_name='время', auto_now_add=True)
 
+    # def delete(self, *args, **kwargs):
+    #     self.product.quantity += self.quantity
+    #     self.product.save()
+    #     super(self.__class__, self).delete(*args, **kwargs)
+    #
+    # def save(self, *args, **kwargs):
+    #     if self.pk:
+    #         old_basket_item = Basket.objects.get(pk=self.pk)
+    #         self.product.quantity = self.quantity - old_basket_item.quantity
+    #     else:
+    #         self.product.quantity -= self.quantity
+    #     self.product.save()
+    #     super(self.__class__, self).save(*args, **kwargs)
+
     @property
     def product_cost(self):
-        "return cost of all products this type"
+        """return cost of all products this type"""
         return self.product.price * self.quantity
 
     @property
     def total_quantity(self):
-        "return total quantity for user"
+        """return total quantity for user"""
         _items = Basket.objects.filter(user=self.user)
         _totalquantity = sum(list(map(lambda x: x.quantity, _items)))
         return _totalquantity
 
     @property
     def total_cost(self):
-        "return total cost for user"
+        """return total cost for user"""
         _items = Basket.objects.filter(user=self.user)
         _totalcost = sum(list(map(lambda x: x.product_cost, _items)))
         return _totalcost
